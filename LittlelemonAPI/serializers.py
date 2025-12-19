@@ -11,6 +11,7 @@ from decimal import Decimal
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
+        #Not added yet (Relationship Serializer)
         model = Category
         fields = ['id', 'slug', 'title']
 
