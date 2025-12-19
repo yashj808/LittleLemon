@@ -1,0 +1,23 @@
+# This file is used by the pipenv package manager to manage the project's dependencies.
+# Pipenv is a tool that aims to bring the best of all packaging worlds (bundler, composer, npm, cargo, yarn, etc.) to the Python world.
+
+[[source]]
+# This section defines the package index to be used.
+# In this case, it is the Python Package Index (PyPI).
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+# This section lists the packages that are required for the project to run.
+# The '*' means that any version of the package is acceptable.
+django = "*"
+djangorestframework = "*"
+
+[dev-packages]
+# This section lists the packages that are required for development, but not for production.
+# For example, you might list testing frameworks or code linters here.
+
+[requires]
+# This section specifies the required Python version for the project.
+python_version = "3.13"
