@@ -5,6 +5,13 @@
 
 from django.db import models  # Django ORM base models
 
+class Category(models.Model):
+    slug = models.SlugField()
+    title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.title}'
+
 # Simple data model for a menu item (used by the API)
 # This class defines the structure of a menu item in the database.
 class MenuItem(models.Model):
@@ -14,6 +21,7 @@ class MenuItem(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)  # price (e.g., 9.99)
     # The number of items in stock, stored as a small integer field.
     inventory = models.SmallIntegerField()  # how many are available in stock
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True, default=1)
 
     # This method returns a string representation of the MenuItem object.
     # It is used in the Django admin interface and when printing the object.
