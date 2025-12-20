@@ -2,31 +2,69 @@
 # A view is a Python function or class that takes a web request and returns a web response.
 # The response can be the HTML contents of a Web page, or a redirect, or a 404 error, or an XML document, or an image . . . or anything, really.
 # In this case, the views are API endpoints that return JSON data.
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .models import MenuItem
-from .serializers import MenuItemSerializer
+from rest_framework import status # Import the status module from Django REST Framework for HTTP status codes
+from rest_framework.response import Response # Import the Response class for sending responses
+from rest_framework.decorators import api_view # Import the api_view decorator for creating API views
+from .models import MenuItem # Import the MenuItem model from the current directory
+from .serializers import MenuItemSerializer # Import the MenuItemSerializer from the current directory
+from .models import Category # Import the Category model from the current directory
+from .serializers import CategorySerializer # Import the CategorySerializer from the current directory
 
-@api_view(['GET'])
-def menu_items(request):
-    if request.method == 'GET':
-        items = MenuItem.objects.select_related('category').all()
-        serializer = MenuItemSerializer(items, many=True)
-        return Response(serializer.data)
+@api_view(['GET', 'POST']) # A decorator that specifies the allowed HTTP methods for this view
+def menu_items(request): # A view function to handle requests for all menu items
+    if request.method == 'GET': # If the request method is GET
+        items = MenuItem.objects.select_related('category').all() # Get all MenuItem objects from the database, including their related Category
+        serializer = MenuItemSerializer(items, many=True) # Serialize the list of menu items
+        return Response(serializer.data) # Return the serialized data as a response
 
-    elif request.method == 'POST':
-        serializer = MenuItemSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'POST': # If the request method is POST
+        serializer = MenuItemSerializer(data=request.data) # Create a new serializer with the request data
+        if serializer.is_valid(): # If the data is valid
+            serializer.save() # Save the new menu item to the database
+            return Response(serializer.data, status=status.HTTP_201_CREATED) # Return the new menu item with a 201 Created status
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # If the data is invalid, return a 400 Bad Request status
 
-@api_view(['GET'])
-def single_menu_item(request, pk):
-    try:
-        item = MenuItem.objects.get(pk=pk)
-    except MenuItem.DoesNotExist:
-        return Response(status=404)
-    serialized_item = MenuItemSerializer(item)
-    return Response(serialized_item.data)
+@api_view(['GET', 'POST']) # A decorator that specifies the allowed HTTP methods for this view
+def single_menu_item(request, pk): # A view function to handle requests for a single menu item
+    try: # Try to get the menu item with the specified primary key
+        item = MenuItem.objects.get(pk=pk) # Get the MenuItem object with the specified primary key
+    except MenuItem.DoesNotExist: # If the menu item does not exist
+        return Response(status=404) # Return a 404 Not Found status
+    serialized_item = MenuItemSerializer(item) # Serialize the menu item
+    return Response(serialized_item.data) # Return the serialized data as a response
+
+@api_view(['GET', 'POST']) # A decorator that specifies the allowed HTTP methods for this view
+def categories(request): # A view function to handle requests for all categories
+    if request.method == 'GET': # If the request method is GET
+        categories = Category.objects.all() # Get all Category objects from the database
+        serializer = CategorySerializer(categories, many=True) # Serialize the list of categories
+        return Response(serializer.data) # Return the serialized data as a response
+
+    elif request.method == 'POST': # If the request method is POST
+        serializer = CategorySerializer(data=request.data) # Create a new serializer with the request data
+        if serializer.is_valid(): # If the data is valid
+            serializer.save() # Save the new category to the database
+            return Response(serializer.data, status=status.HTTP_201_CREATED) # Return the new category with a 201 Created status
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # If the data is invalid, return a 400 Bad Request status
+    
+@api_view(['GET', 'PUT', 'DELETE']) # A decorator that specifies the allowed HTTP methods for this view
+def single_category(request, pk): # A view function to handle requests for a single category
+    try: # Try to get the category with the specified primary key
+        category = Category.objects.get(pk=pk) # Get the Category object with the specified primary key
+    except Category.DoesNotExist: # If the category does not exist
+        return Response(status=status.HTTP_404_NOT_FOUND) # Return a 404 Not Found status
+
+    if request.method == 'GET': # If the request method is GET
+        serializer = CategorySerializer(category) # Serialize the category
+        return Response(serializer.data) # Return the serialized data as a response
+
+    elif request.method == 'PUT': # If the request method is PUT
+        serializer = CategorySerializer(category, data=request.data) # Create a new serializer with the request data
+        if serializer.is_valid(): # If the data is valid
+            serializer.save() # Save the updated category to the database
+            return Response(serializer.data) # Return the updated category
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # If the data is invalid, return a 400 Bad Request status
+
+    elif request.method == 'DELETE': # If the request method is DELETE
+        category.delete() # Delete the category from the database
+        return Response(status=status.HTTP_204_NO_CONTENT) # Return a 204 No Content status
