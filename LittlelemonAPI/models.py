@@ -3,6 +3,23 @@
 # Each attribute of the class represents a column in the table.
 # Django's Object-Relational Mapper (ORM) uses these models to interact with the database.
 
+"""
+Data to pass to the /menu-items endpoint
+{
+"title": "Pasta Carbonara",
+"price": "12.50",
+"stock": 50,
+"category_id": 1
+}"""
+
+"""
+Data to pass to the /categories endpoint
+{
+"slug": "example-slug",
+"title": "Example Category"
+}
+"""
+
 from django.db import models  # Django ORM base models
 
 class Category(models.Model): # A data model for a category of menu items

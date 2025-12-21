@@ -14,6 +14,24 @@ from .serializers import CategorySerializer # Import the CategorySerializer from
 def menu_items(request): # A view function to handle requests for all menu items
     if request.method == 'GET': # If the request method is GET
         items = MenuItem.objects.select_related('category').all() # Get all MenuItem objects from the database, including their related Category
+        
+        # Make query parameter keys lowercase for case-insensitive access
+        params = {k.lower(): v for k, v in request.query_params.items()}
+        category_name = params.get('category')
+        to_price = params.get('to_price')
+        search = params.get('search')
+        ordering = params.get('ordering')
+
+        if category_name:
+            items = items.filter(category__title__iexact=category_name) # Use iexact for case-insensitive matching
+        if to_price:
+            items = items.filter(price__lte=to_price)
+        if search:
+            items = items.filter(title__contains=search)
+        if ordering:
+            ordering_fields = ordering.split(",")
+            items = items.order_by(*ordering_fields)
+
         serializer = MenuItemSerializer(items, many=True) # Serialize the list of menu items
         return Response(serializer.data) # Return the serialized data as a response
 
