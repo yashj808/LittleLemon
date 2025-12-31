@@ -66,7 +66,8 @@ INSTALLED_APPS = [
     'rest_framework',
     # This is your custom app for the Littlelemon API.
     'LittlelemonAPI',
-    'django_filters'
+    'django_filters',
+    'rest_framework.authtoken'
 ]
 
 # The MIDDLEWARE setting is a list of middleware to be executed during the request/response processing.
@@ -175,5 +176,8 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':2
+    'PAGE_SIZE':2,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }

@@ -12,8 +12,10 @@ from .serializers import CategorySerializer # Import the CategorySerializer from
 from django.core.paginator import Paginator, EmptyPage
 from rest_framework.response import Response 
 from rest_framework import viewsets 
-# from .models import MenuItem 
-# from .serializers import MenuItemSerializer
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
 class MenuItemsViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
@@ -104,3 +106,16 @@ def single_category(request, pk): # A view function to handle requests for a sin
     elif request.method == 'DELETE': # If the request method is DELETE
         category.delete() # Delete the category from the database
         return Response(status=status.HTTP_204_NO_CONTENT) # Return a 204 No Content status
+    
+@api_view()
+@permission_classes([IsAuthenticated])
+def secret(request):
+    return Response({"messgae":"Some secret message"})
+
+@api_view()
+@permission_classes([IsAuthenticated])
+def manager_view(request):
+    if request.user.groups.filter(name='Manager').exists():
+        return Response({"message": "Only manager should see this"})
+    else:
+        return Response({'message': "You are not authorized"}, 403)
