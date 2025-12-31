@@ -65,7 +65,8 @@ INSTALLED_APPS = [
     # The rest_framework app is a powerful and flexible toolkit for building Web APIs.
     'rest_framework',
     # This is your custom app for the Littlelemon API.
-    'LittlelemonAPI'
+    'LittlelemonAPI',
+    'django_filters'
 ]
 
 # The MIDDLEWARE setting is a list of middleware to be executed during the request/response processing.
@@ -167,5 +168,12 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework_xml.renderers.XMLRenderer',
-    ]
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+        'rest_framework.filters.SearchFilter',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':2
 }

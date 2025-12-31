@@ -13,6 +13,7 @@ django = ">=5.0,<5.2"
 djangorestframework = ">=3.15,<3.17"
 djangorestframework-xml = ">=2.0,<2.1"
 bleach = "*"
+django-filter = "*"
 
 [dev-packages]
 

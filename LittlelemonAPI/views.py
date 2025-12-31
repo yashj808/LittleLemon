@@ -9,6 +9,16 @@ from .models import MenuItem # Import the MenuItem model from the current direct
 from .serializers import MenuItemSerializer # Import the MenuItemSerializer from the current directory
 from .models import Category # Import the Category model from the current directory
 from .serializers import CategorySerializer # Import the CategorySerializer from the current directory
+from django.core.paginator import Paginator, EmptyPage
+from rest_framework.response import Response 
+from rest_framework import viewsets 
+# from .models import MenuItem 
+# from .serializers import MenuItemSerializer
+class MenuItemsViewSet(viewsets.ModelViewSet):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
+    ordering_class = ['price', 'inventory']
+    search_fields = ['title', 'category__title']
 
 @api_view(['GET', 'POST']) # A decorator that specifies the allowed HTTP methods for this view
 def menu_items(request): # A view function to handle requests for all menu items
@@ -21,6 +31,8 @@ def menu_items(request): # A view function to handle requests for all menu items
         to_price = params.get('to_price')
         search = params.get('search')
         ordering = params.get('ordering')
+        perpage = int(params.get('perpage', 2)) #Value is typecasted into int to becuase the params does not handle query params
+        page = int(params.get('page', 1))
 
         if category_name:
             items = items.filter(category__title__iexact=category_name) # Use iexact for case-insensitive matching
@@ -31,6 +43,12 @@ def menu_items(request): # A view function to handle requests for all menu items
         if ordering:
             ordering_fields = ordering.split(",")
             items = items.order_by(*ordering_fields)
+
+        paginator = Paginator(items, per_page=perpage)
+        try:
+            items = paginator.page(number=page)
+        except EmptyPage:
+            items = []
 
         serializer = MenuItemSerializer(items, many=True) # Serialize the list of menu items
         return Response(serializer.data) # Return the serialized data as a response
