@@ -4,7 +4,7 @@
 # In this case, the views are API endpoints that return JSON data.
 from rest_framework import status # Import the status module from Django REST Framework for HTTP status codes
 from rest_framework.response import Response # Import the Response class for sending responses
-from rest_framework.decorators import api_view # Import the api_view decorator for creating API views
+from rest_framework.decorators import api_view, throttle_classes, permission_classes # Import the api_view decorator for creating API views
 from .models import MenuItem # Import the MenuItem model from the current directory
 from .serializers import MenuItemSerializer # Import the MenuItemSerializer from the current directory
 from .models import Category # Import the Category model from the current directory
@@ -12,9 +12,11 @@ from .serializers import CategorySerializer # Import the CategorySerializer from
 from django.core.paginator import Paginator, EmptyPage
 from rest_framework.response import Response 
 from rest_framework import viewsets 
+from rest_framework.throttling import AnonRateThrottle
+from rest_framework.throttling import UserRateThrottle
+from .throttles import TenCallsPerMinute
 
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import permission_classes
 
 class MenuItemsViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()
@@ -119,3 +121,14 @@ def manager_view(request):
         return Response({"message": "Only manager should see this"})
     else:
         return Response({'message': "You are not authorized"}, 403)
+    
+@api_view()
+@throttle_classes([AnonRateThrottle])
+def throttle_check(request):
+    return Response({"message":"successful"})
+
+@api_view()
+@permission_classes([IsAuthenticated])
+@throttle_classes([TenCallsPerMinute])
+def throttle_check_auth(request):
+    return Response({"message":"message for the logged in users only"})
