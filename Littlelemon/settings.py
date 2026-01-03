@@ -67,7 +67,8 @@ INSTALLED_APPS = [
     # This is your custom app for the Littlelemon API.
     'LittlelemonAPI',
     'django_filters',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 # The MIDDLEWARE setting is a list of middleware to be executed during the request/response processing.
@@ -179,10 +180,15 @@ REST_FRAMEWORK = {
     'PAGE_SIZE':2,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon':'2/minute',
         'user':'5/minute',
         'ten':'10/minute'
     }
+}
+
+DJOSER = {
+    "USER_ID_FIELD" : "username"
 }

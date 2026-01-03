@@ -32,4 +32,7 @@ urlpatterns = [
     # This is a good practice for organizing your project's URLs.
     # Each app can have its own urls.py file, and you can include them in the main urls.py file.
     path('api/', include('LittlelemonAPI.urls')),
+
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 ]
