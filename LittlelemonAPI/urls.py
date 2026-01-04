@@ -16,5 +16,6 @@ urlpatterns = [ # A list of URL patterns
     path('throttle_check/', views.throttle_check),
     path('throttle_check_auth/', views.throttle_check_auth),
     path('categories/', views.categories),  # A URL pattern for all categories
-    path('categories/<int:pk>/', views.single_category) # A URL pattern for a single category, identified by its primary key
+    path('categories/<int:pk>/', views.single_category), # A URL pattern for a single category, identified by its primary key
+    path('groups/manager/users/', views.managers),
 ]

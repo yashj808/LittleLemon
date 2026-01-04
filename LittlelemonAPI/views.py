@@ -10,6 +10,7 @@ from .serializers import MenuItemSerializer # Import the MenuItemSerializer from
 from .models import Category # Import the Category model from the current directory
 from .serializers import CategorySerializer # Import the CategorySerializer from the current directory
 from django.core.paginator import Paginator, EmptyPage
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response 
 from rest_framework import viewsets 
 from rest_framework.throttling import AnonRateThrottle
@@ -17,6 +18,8 @@ from rest_framework.throttling import UserRateThrottle
 from .throttles import TenCallsPerMinute
 
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser
+from django.contrib.auth.models import User, Group
 
 class MenuItemsViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()
@@ -132,3 +135,16 @@ def throttle_check(request):
 @throttle_classes([TenCallsPerMinute])
 def throttle_check_auth(request):
     return Response({"message":"message for the logged in users only"})
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def managers(request):
+    username = request.data['username']
+    if username:
+        user = get_object_or_404(User, username=username)
+        managers = Group.objects.get(name="Manager")
+        managers.user_set.add(user)
+        return Response({"message":"ok"})
+    
+    return Response({"message":"error"}, status.HTTP_400_BAD_REQUEST)
+    

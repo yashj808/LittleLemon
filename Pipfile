@@ -15,7 +15,8 @@ djangorestframework-xml = ">=2.0,<2.1"
 bleach = "*"
 django-filter = "*"
 djoser = "*"
-djangorestframework-simplejwt = "~=5.2.1"
+setuptools = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

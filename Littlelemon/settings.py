@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # The BASE_DIR setting defines the project's base directory.
 # All other paths in the project will be relative to this directory.
@@ -69,6 +70,8 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework.authtoken',
     'djoser',
+    # 'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt.token_blacklist',
 ]
 
 # The MIDDLEWARE setting is a list of middleware to be executed during the request/response processing.
@@ -179,6 +182,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE':2,
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
@@ -191,4 +195,8 @@ REST_FRAMEWORK = {
 
 DJOSER = {
     "USER_ID_FIELD" : "username"
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5)
 }

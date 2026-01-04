@@ -21,6 +21,8 @@ Including another URLconf
 # from django.contrib import admin
 from django.contrib import admin
 from django.urls import path, include
+# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+# from rest_framework_simplejwt.views import TokenBlacklistView
 
 # The urlpatterns list is a list of URL patterns that Django will try to match against the requested URL.
 # When a URL is requested, Django starts at the first pattern in urlpatterns and works its way down the list, comparing the requested URL against each pattern until it finds one that matches.
@@ -35,4 +37,9 @@ urlpatterns = [
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
-]
+
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
+    ]
