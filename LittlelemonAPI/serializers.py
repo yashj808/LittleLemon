@@ -4,11 +4,29 @@ from .models import Category # Import the Category model from the current direct
 from decimal import Decimal # Import the Decimal module for precise decimal arithmetic
 import bleach
 
+from .models import Rating
+from rest_framework.validators import UniqueTogetherValidator
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 # class MenuItemSerializer(serializers.Serializer):
 #     id = serializers.IntegerField()
 #     title = serializers.CharField(max_length=255)
 #     price = serializers.DecimalField(max_digits=6, decimal_places=2)
 #     inventory = serializers.IntegerField()
+
+class RatingSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        queryset = User.objects.all(),
+        default = serializers.CurrentUserDefault()
+    )
+    class Meta:
+        model = Rating
+        fields = ['user', 'menuitem_id', 'rating']
+
+        validators = [UniqueTogetherValidator(queryset=Rating.objects.all(), fields=['user', 'menuitem_id'])]
+
+        extra_kwargs = {'rating': {'max_value': 5, 'min_value': 0}}
 
 class CategorySerializer(serializers.ModelSerializer): # Define a serializer for the Category model
     class Meta: # The Meta class specifies metadata for the serializer

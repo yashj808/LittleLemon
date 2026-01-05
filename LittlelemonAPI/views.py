@@ -7,8 +7,8 @@ from rest_framework.response import Response # Import the Response class for sen
 from rest_framework.decorators import api_view, throttle_classes, permission_classes # Import the api_view decorator for creating API views
 from .models import MenuItem # Import the MenuItem model from the current directory
 from .serializers import MenuItemSerializer # Import the MenuItemSerializer from the current directory
-from .models import Category # Import the Category model from the current directory
-from .serializers import CategorySerializer # Import the CategorySerializer from the current directory
+from .models import Category, Rating # Import the Category and Rating models from the current directory
+from .serializers import CategorySerializer, RatingSerializer # Import the CategorySerializer and RatingSerializer from the current directory
 from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response 
@@ -20,6 +20,15 @@ from .throttles import TenCallsPerMinute
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User, Group
+
+class RatingView(viewsets.ModelViewSet):
+    queryset = Rating.objects.all().order_by('id')
+    serializer_class = RatingSerializer
+
+    def get_permissions(self):
+        if(self.request.method=='GET'):
+            return []
+        return [IsAuthenticated()]
 
 class MenuItemsViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()

@@ -21,6 +21,12 @@ Data to pass to the /categories endpoint
 """
 
 from django.db import models  # Django ORM base models
+from django.contrib.auth.models import User  # Django's built-in User model
+
+class Rating(models.Model):
+    menuitem_id = models.SmallIntegerField()
+    rating = models.SmallIntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Category(models.Model): # A data model for a category of menu items
     slug = models.SlugField() # A field for the category slug (e.g., "pizzas")
