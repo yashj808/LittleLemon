@@ -30,9 +30,9 @@ This is a Django REST Framework API for a fictional restaurant called LittleLemo
         ```bash
         source venv/bin/activate
         ```
-4.  **Install the dependencies:**
+4.  **Install the dependencies from Pipfile:**
     ```bash
-    pip install -r requirements.txt
+    pipenv install
     ```
 5.  **Run the database migrations:**
     ```bash
@@ -51,10 +51,18 @@ This is a Django REST Framework API for a fictional restaurant called LittleLemo
 
 The following API endpoints are available:
 
--   `api/menu-items/`: GET, POST
--   `api/menu-items/{id}`: GET, PUT, DELETE
--   `api/groups/manager/users`: GET, POST, DELETE
--   `api/groups/delivery-crew/users`: GET, POST, DELETE
+-   `admin/`
+-   `api/menu-items/`
+-   `api/menu-items/<int:pk>/`
+-   `api/secret/`
+-   `api/api-token-auth/`
+-   `api/manager-view/`
+-   `api/throttle_check/`
+-   `api/throttle_check_auth/`
+-   `api/categories/`
+-   `api/categories/<int:pk>/`
+-   `api/groups/manager/users/`
+-   `auth/` (Djoser endpoints for user registration and authentication)
 
 For more details on the API, please refer to the API documentation.
 
@@ -69,15 +77,19 @@ The tests are located in the `LittlelemonAPI/tests.py` file.
 ## Project Structure
 ```
 LittleLemon/
+├── .gitignore
 ├── manage.py
 ├── Pipfile
 ├── Pipfile.lock
+├── README.md
+├── db.sqlite3
 ├── Littlelemon/
 │   ├── __init__.py
 │   ├── asgi.py
 │   ├── settings.py
 │   ├── urls.py
 │   ├── wsgi.py
+│   └── __pycache__/
 └── LittlelemonAPI/
     ├── __init__.py
     ├── admin.py
@@ -85,6 +97,7 @@ LittleLemon/
     ├── models.py
     ├── serializers.py
     ├── tests.py
+    ├── throttles.py
     ├── urls.py
     ├── views.py
     └── migrations/
@@ -92,6 +105,7 @@ LittleLemon/
 
 ## Built With
 
--   [Django](https://www.djangoproject.com/)
+-   [Django](https.djangoproject.com/)
 -   [Django REST Framework](https://www.django-rest-framework.org/)
 -   [Python](https://www.python.org/)
+-   [Djoser](https://djoser.readthedocs.io/)
