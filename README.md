@@ -57,6 +57,7 @@ This is a Django REST Framework API for a fictional restaurant called LittleLemo
 
 The following API endpoints are available:
 
+-   `/` (Home endpoint)
 -   `admin/`
 -   `api/menu-items/`
 -   `api/menu-items/<int:pk>/`

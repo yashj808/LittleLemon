@@ -156,4 +156,10 @@ def managers(request):
         return Response({"message":"ok"})
     
     return Response({"message":"error"}, status.HTTP_400_BAD_REQUEST)
-    
+
+from django.http import JsonResponse
+
+def home(request):
+    return JsonResponse({
+        "message": "Little Lemon Restaurant API is live!"
+    })

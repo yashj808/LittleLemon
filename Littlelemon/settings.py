@@ -37,12 +37,12 @@ SECRET_KEY = 'django-insecure-(7rhfhl1%j6n1fo=7dzbo^lvyxbveo@zy#@4z(wn@=#h$@w_h_
 # When DEBUG is True, Django will show detailed error pages if an exception is raised.
 # This is useful for development, but it should be set to False in a production environment for security reasons.
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # The ALLOWED_HOSTS setting is a list of strings representing the host/domain names that this Django site can serve.
 # This is a security measure to prevent HTTP Host header attacks.
 # In development, this can be an empty list. In production, you should add your domain name(s) here.
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['littlelemon-restraunt-api.onrender.com']
 
 
 # Application definition

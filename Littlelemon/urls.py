@@ -24,9 +24,13 @@ from django.urls import path, include
 # from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 # from rest_framework_simplejwt.views import TokenBlacklistView
 
+from LittlelemonAPI import views
+
 # The urlpatterns list is a list of URL patterns that Django will try to match against the requested URL.
 # When a URL is requested, Django starts at the first pattern in urlpatterns and works its way down the list, comparing the requested URL against each pattern until it finds one that matches.
 urlpatterns = [
+    # Root URL
+    path('', views.home, name='home'),
     # The admin/ URL pattern is for the Django admin site.
     # The admin site is a ready-to-use interface for managing your site's content.
     path('admin/', admin.site.urls),
