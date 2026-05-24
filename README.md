@@ -30,10 +30,16 @@ This is a Django REST Framework API for a fictional restaurant called LittleLemo
         ```bash
         source venv/bin/activate
         ```
-4.  **Install the dependencies from Pipfile:**
-    ```bash
-    pipenv install
-    ```
+4.  **Install the dependencies:**
+    -   Using `pip`:
+        ```bash
+        pip install -r requirements.txt
+        ```
+    -   Using `pipenv`:
+        ```bash
+        pipenv install
+        ```
+
 5.  **Run the database migrations:**
     ```bash
     python manage.py migrate
@@ -62,6 +68,7 @@ The following API endpoints are available:
 -   `api/categories/`
 -   `api/categories/<int:pk>/`
 -   `api/groups/manager/users/`
+-   `api/ratings/`
 -   `auth/` (Djoser endpoints for user registration and authentication)
 
 For more details on the API, please refer to the API documentation.
@@ -81,6 +88,7 @@ LittleLemon/
 ├── manage.py
 ├── Pipfile
 ├── Pipfile.lock
+├── requirements.txt
 ├── README.md
 ├── db.sqlite3
 ├── Littlelemon/
@@ -105,7 +113,9 @@ LittleLemon/
 
 ## Built With
 
--   [Django](https.djangoproject.com/)
+-   [Django](https://www.djangoproject.com/)
 -   [Django REST Framework](https://www.django-rest-framework.org/)
 -   [Python](https://www.python.org/)
 -   [Djoser](https://djoser.readthedocs.io/)
+-   [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/)
+-   [WhiteNoise](http://whitenoise.evans.io/)
