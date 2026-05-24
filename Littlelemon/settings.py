@@ -42,7 +42,7 @@ DEBUG = True
 # The ALLOWED_HOSTS setting is a list of strings representing the host/domain names that this Django site can serve.
 # This is a security measure to prevent HTTP Host header attacks.
 # In development, this can be an empty list. In production, you should add your domain name(s) here.
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,6 +79,7 @@ INSTALLED_APPS = [
 # It’s a light, low-level “plugin” system for globally altering Django’s input or output.
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -200,3 +201,7 @@ DJOSER = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5)
 }
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
