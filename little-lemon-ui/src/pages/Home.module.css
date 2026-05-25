@@ -1,0 +1,56 @@
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #495e57;
+  color: #edefee;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #f4ce14;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.ctaBtn {
+  display: inline-block;
+  background-color: #f4ce14;
+  color: #333;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.ctaBtn:hover {
+  background-color: #dcb712;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.featureCard {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  flex: 1;
+  text-align: center;
+}
+
+.featureCard h3 {
+  color: #495e57;
+  margin-bottom: 1rem;
+}
