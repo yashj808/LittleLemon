@@ -47,11 +47,23 @@ This is a Django REST Framework API for a fictional restaurant called LittleLemo
 
 ## Running the Application
 
+### Backend
 1.  **Start the development server:**
     ```bash
     python manage.py runserver
     ```
 2.  Open your web browser and navigate to `http://127.0.0.1:8000/`.
+
+### Frontend
+1.  **Navigate to the UI directory:**
+    ```bash
+    cd little-lemon-ui
+    ```
+2.  **Start the Vite dev server:**
+    ```bash
+    npm run dev
+    ```
+3.  Open your web browser and navigate to `http://localhost:5173/`.
 
 ## API Endpoints
 
